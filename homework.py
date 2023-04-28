@@ -1,39 +1,19 @@
-from Node import Node
+from BST import BinarySearchTree
+"""
+    create function take in a func which take in a list wrapper -> convert list to bst
+"""
 
-
-def insert_node(value, node= None):
-    if not node:
-        node = Node(value)
-    if value < node.value:
-        if not node.left:
-            node.left = Node(value)
-        else:
-            return insert_node(value, node.left)
-    else:
-        if not node.right: 
-            node.right = Node(value)
-        else:
-            return insert_node(value, node.right)
-def to_bts(alist):
-    node = None
-    for value in alist:
-        node = insert_node(value)
-    return node
-
-def binary_decorator(func):
+def convert_to_bst(func):
     def wrapper(alist):
-        node = to_bts(alist)
-        return func(node)
+        bst = BinarySearchTree(alist[0])
+        for e in alist[1:]:
+            bst.add_node(e)
+        func(bst)
     return wrapper
 
-@binary_decorator
-def get_min(alist):
-    if not node:
-        node = Node(value)
-        return node.value
-    return get_min(node.left)
+@convert_to_bst
+def print_bst(alist):
+    alist.print_in_order()
+    return
 
-
-lst = [3, 7, 2, 8, 1, 9, 4, 6, 5]
-result = get_min(lst)
-print(result)  # Output: 1
+print_bst([10,4,19,11,100])
